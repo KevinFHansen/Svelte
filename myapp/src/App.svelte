@@ -1,9 +1,65 @@
 <script>
   import svelteLogo from './assets/svelte.svg'
   import Counter from './lib/Counter.svelte'
+  import Nested from './Nested.svelte';
+  
+  let name = 'world';
+  let src = '/images/Studiebilled1.jpg'
+  let string = `this string contains some <strong>HTML!!!</strong>`;
+  let count = 0;
+  $: doubled = count * 2;
+  $: {
+	console.log('the count is ' + count);
+	alert('I SAID THE COUNT IS ' + count);
+}
+$: if (count >= 10) {
+	alert('count is dangerously high!');
+	count = 9;
+}
+  function incrementCount() {
+	count += 1;
+  }
+
+  let numbers = [1, 2, 3, 4];
+
+  function addNumber() {
+	numbers = [...numbers, numbers.length + 1];
+}
+$: sum = numbers.reduce((t, n) => t + n, 0);
 </script>
 
+  
 <main>
+
+
+  <p>{numbers.join(' + ')} = {sum}</p>
+
+  <button on:click={addNumber}>
+    Add a number
+  </button>
+
+  <p>{count} doubled is {doubled}</p>
+  <button on:click={incrementCount}>Clicked {count} {count === 1 ? 'time' : 'times'}</button>
+  <p>{string}</p>
+  <p>{@html string}</p>
+
+<p>This is a paragraph.</p>
+  <Nested/>
+
+  <h1>Hello {name}!</h1>
+  <img {src} alt="A man dances">
+
+
+
+  <style>
+    p {
+      color: purple;
+      font-family: 'Comic Sans MS', cursive;
+      font-size: 2em;
+    }
+  </style>
+
+
   <div>
     <a href="https://vitejs.dev" target="_blank"> 
       <img src="/vite.svg" class="logo" alt="Vite Logo" />
